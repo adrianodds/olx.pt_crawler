@@ -40,6 +40,6 @@ for i in anuncioshoje:
         string_sql = (f"insert into anuncios(id)  values ({id[1].strip()})")
         cursor.execute(string_sql)
         con.commit()
-        olx_modelus.email(olx_modelus.enderecos_email(),(f"Corre!!! OLX! - {titulo + ' - ' + valor}"), (f"{corpo_email}"))
+        olx_funcoes.email(olx_funcoes.enderecos_email(),(f"Corre!!! OLX! - {titulo + ' - ' + valor}"), (f"{corpo_email}"))
 navegador.sair()
 con.close()
