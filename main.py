@@ -1,12 +1,12 @@
 import chrome
-import olx_modelus
+import olx_funcoes
 navegador = chrome.chrome()
 
 navegador.navegar("https://www.olx.pt/d/imoveis/quartos-para-aluguer/porto/?search%5Border%5D=created_at:desc")
 anuncioshoje = navegador.crawler()
 
 #CONEXÃO BD
-con = olx_modelus.conexao()
+con = olx_funcoes.conexao()
 cursor = con.cursor()
 
 print("Em execução..")
