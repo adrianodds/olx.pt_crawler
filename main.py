@@ -6,8 +6,8 @@ navegador.navegar("https://www.olx.pt/d/imoveis/quartos-para-aluguer/porto/?sear
 anuncioshoje = navegador.crawler()
 
 #CONEXÃO BD
-con = olx_funcoes.conexao()
-cursor = con.cursor()
+#con = olx_funcoes.conexao()
+#cursor = con.cursor()
 
 print("Em execução..")
 
@@ -27,19 +27,18 @@ for i in anuncioshoje:
     local = anuncioshoje[i]["localizacao: "]
 
     corpo_email = (f"ID do Anúncio: {id}\nValor: {valor}\nLocal: {local}\nData: {data}\nAnunciante: {anunciante}\n{qtdCliques}\n{descricao}\nLink: {link}")
-
-    string_sql = (f"select id from anuncios where id='{id}'")
-
+    
     condicao_insert_bd = True
 
-    cursor.execute(string_sql)
-    for i in cursor.fetchall():
-        if int(id) == int(i[0]):
+    try:
+        ids =  open('Id.txt', 'r')
+        id_comparar = ids.read().split("|")
+    except:
+        id_comparar = ()
+
+    for a in id_comparar:
+        if id == a:
             condicao_insert_bd  = False
     if condicao_insert_bd :
-        string_sql = (f"insert into anuncios(id)  values ({id[1].strip()})")
-        cursor.execute(string_sql)
-        con.commit()
+        olx_funcoes.gerar_arquivo(str(id))
         olx_funcoes.email(olx_funcoes.enderecos_email(),(f"Corre!!! OLX! - {titulo + ' - ' + valor}"), (f"{corpo_email}"))
-navegador.sair()
-con.close()

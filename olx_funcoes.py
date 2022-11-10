@@ -1,3 +1,4 @@
+from venv import create
 import psycopg2
 import smtplib
 from email.message import EmailMessage
@@ -14,8 +15,8 @@ def conexao():
     return con
 
 def email(email,titulo, mensagem):
-    email_address = "email remetente"
-    email_passowrd = "token"
+    email_address = ""
+    email_passowrd = ""
 
     msg = EmailMessage()
     msg['Subject'] = titulo
@@ -31,5 +32,17 @@ def email(email,titulo, mensagem):
     print("E-mail enviado!")
     
 def enderecos_email():
-    enderecos = ["endereços de emails"]
+    enderecos = [""]
     return enderecos
+
+def gerar_arquivo(texto):
+    try:
+        with open('Id.txt', 'a') as file:
+            if texto != " ":
+                file.write(texto+"|")
+        file.close()
+    except:
+        with create('Id.txt', 'w+') as file:     
+            if texto != " ":   
+                file.write(texto)
+        file.close()
